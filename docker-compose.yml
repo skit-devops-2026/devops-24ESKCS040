@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    image: ghcr.io/skit-devops-2026/devops-24eskcs040:latest
+    container_name: elara-web
+    ports:
+      - 8080:80
+    restart: always
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: elara-prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    restart: always
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: elara-grafana
+    ports:
+      - 3000:3000
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    restart: always

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elara-deployment
+  labels:
+    app: elara
+    tier: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: elara
+  template:
+    metadata:
+      labels:
+        app: elara
+        tier: frontend
+    spec:
+      containers:
+        - name: elara-web
+          image: ghcr.io/skit-devops-2026/devops-24eskcs040:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+              name: http
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 64Mi
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 15

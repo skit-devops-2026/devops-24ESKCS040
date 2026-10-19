@@ -1,0 +1,19 @@
+# HELP elara_app_up Status of ELARA application
+# TYPE elara_app_up gauge
+elara_app_up 1
+
+# HELP elara_http_requests_total Total number of HTTP requests processed
+# TYPE elara_http_requests_total counter
+elara_http_requests_total{method=GET,handler=/,status=200} 128
+elara_http_requests_total{method=GET,handler=/health,status=200} 64
+elara_http_requests_total{method=GET,handler=/metrics,status=200} 64
+
+# HELP elara_http_request_duration_seconds HTTP request latency in seconds
+# TYPE elara_http_request_duration_seconds histogram
+elara_http_request_duration_seconds_bucket{le=0.01} 95
+elara_http_request_duration_seconds_bucket{le=0.05} 120
+elara_http_request_duration_seconds_bucket{le=0.1} 125
+elara_http_request_duration_seconds_bucket{le=0.5} 128
+elara_http_request_duration_seconds_bucket{le=+Inf} 128
+elara_http_request_duration_seconds_sum 2.85
+elara_http_request_duration_seconds_count 128
